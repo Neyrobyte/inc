@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" as="style">
+    <link rel="preload" href="res/back.webp" as="image">
     <title>Neyrobyte | Инновационные технологии будущего</title>
     <style>
         
@@ -23,6 +25,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         /* Стиль body */
@@ -71,6 +74,11 @@
             color: var(--primary);
             font-size: 14px;
         }
+        /* Текст логотипа */
+        .logo-placeholder p {
+            margin-left: 1rem;
+            font-size: 1rem;
+        }
         
         /* Меню */
         .mobile-menu-btn {
@@ -82,7 +90,6 @@
             position: relative;
             width: 30px;
             height: 30px;
-            -webkit-tap-highlight-color: transparent;
             user-select: none;
         }
         
@@ -143,16 +150,16 @@
             color: var(--primary);
         }
         
-        /* Стили герой-секции */
+        /* Стили hero-секции */
         .hero {
             padding: 60px 0;
             text-align: center;
             border-bottom: 1px solid var(--secondary);
             background-image: 
-                linear-gradient(to bottom, rgba(0, 200, 0, 0.8), rgba(0, 0, 0, 0.9)),
+                linear-gradient(to bottom, rgba(0, 200, 40, 0.8), rgba(0, 0, 0, 0.9)),
                 url(res/back.webp);
             background-size: 35rem;
-            background-blend-mode: multiply; /* или 'multiply' для более сильного эффекта */
+            background-blend-mode: multiply;
         }
         
         /* Адаптивный заголовок с неоновым эффектом */
@@ -160,11 +167,11 @@
             font-size: clamp(2rem, 5vw, 3.5rem); /* Адаптивный размер шрифта */
             margin-bottom: 20px;
             color: var(--primary);
-            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5); /* Неоновое свечение */
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5); /* Неон-свечение */
             line-height: 1.2;
         }
         
-        /* Адаптивный текст в герой-секции */
+        /* Адаптивный текст в hero-секции */
         .hero p {
             font-size: clamp(1rem, 2vw, 1.2rem);
             max-width: 800px;
@@ -242,14 +249,14 @@
             color: var(--dark);
         }
         
-        /* Стили подвала */
+        /* Стили футера */
         footer {
             background-color: var(--gray);
             padding: 40px 0 20px;
             border-top: 1px solid var(--secondary);
         }
         
-        /* Сетка колонок в подвале */
+        /* Сетка колонок в футере */
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -257,14 +264,14 @@
             margin-bottom: 30px;
         }
         
-        /* Заголовки колонок подвала */
+        /* Заголовки колонок футера */
         .footer-column h4 {
             color: var(--primary);
             margin-bottom: 20px;
             font-size: 1.1rem;
         }
         
-        /* Списки в подвале */
+        /* Списки в футере */
         .footer-column ul {
             list-style: none;
         }
@@ -285,7 +292,7 @@
             color: var(--primary);
         }
         
-        /* Копирайт в подвале */
+        /* Копирайт в футере */
         .copyright {
             text-align: center;
             padding-top: 20px;
@@ -312,15 +319,19 @@
         /* Контейнер мобильного меню */
         .mobile-menu {
             position: fixed;
-            top: 80px;
+            top: 70px;
             left: 0;
             width: 100%;
-            background-color: var(--gray);
             padding: 20px;
             border-bottom: 1px solid var(--secondary);
             z-index: 99;
             transform: translateY(-100%);
             transition: transform 0.3s ease;
+            background-image: 
+                linear-gradient(to bottom, rgba(0, 200, 90, 0.8), rgba(0, 0, 0, 0.9)),
+                url(res/cubes.jpg);
+            background-size: 110%;
+            background-blend-mode: overlay;
         }
         
         .mobile-menu ul {
@@ -336,10 +347,10 @@
         }
         
         /* Задержки анимации для пунктов меню */
-        .mobile-menu ul li:nth-child(1) { transition-delay: 0.1s; }
-        .mobile-menu ul li:nth-child(2) { transition-delay: 0.2s; }
-        .mobile-menu ul li:nth-child(3) { transition-delay: 0.3s; }
-        .mobile-menu ul li:nth-child(4) { transition-delay: 0.4s; }
+        .mobile-menu ul li:nth-child(1) { transition-delay: 0.2s; }
+        .mobile-menu ul li:nth-child(2) { transition-delay: 0.3s; }
+        .mobile-menu ul li:nth-child(3) { transition-delay: 0.4s; }
+        .mobile-menu ul li:nth-child(4) { transition-delay: 0.5s; }
         
         .mobile-menu ul li a {
             color: var(--light);
@@ -347,6 +358,7 @@
             font-size: 1rem;
             display: block;
             padding: 10px;
+            width: 95%;
             border-radius: 3px;
             transition: all 0.3s;
         }
@@ -354,6 +366,9 @@
         .mobile-menu ul li a:hover {
             background-color: rgba(0, 255, 65, 0.1);
             color: var(--primary);
+            border: solid rgba(0, 255, 65, 0.2) 1px;
+            border-radius: 4px;
+            transform: translateX(4%);
         }
         
         /* Анимации через чекбокс */
@@ -415,7 +430,7 @@
                 display: none;
             }
             
-            /* Адаптация герой-секции */
+            /* Адаптация hero-секции */
             .hero {
                 padding: 40px 0;
             }
@@ -438,7 +453,7 @@
                 gap: 20px;
             }
             
-            /* Адаптация подвала */
+            /* Адаптация футера */
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: 25px;
@@ -497,7 +512,10 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo-placeholder"><img src="./res/hd_logo.png" alt="" width="65rem"><p style="margin-left: 1rem; font-size: 1rem;">Neyrobyte.inc</p></div>
+                <div class="logo-placeholder">
+                    <img src="./res/hd_logo.png" alt="logo" width="65rem">
+                    <p>Neyrobyte.inc</p>
+                </div>
                 <label for="menu-toggle" class="mobile-menu-btn">
                     <span></span>
                     <span></span>
@@ -609,13 +627,13 @@
                     <ul>
                         <li>info@Neyrobyte.inc</li>
                         <li>+7 (777) 777-77-77</li>
-                        <li>s. Bhoston, Tremont street 18</li>
+                        <li>Bhoston, Tremont street 18</li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 Neyrobyte Corporation. Все права защищены.</p>
+                <p>&copy; 2025 Neyrobyte Corporation. Все права защищены.</p>
             </div>
         </div>
     </footer>
