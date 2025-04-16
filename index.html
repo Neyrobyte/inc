@@ -5,22 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neyrobyte | Инновационные технологии будущего</title>
     <style>
+        
+        /* Импорт шрифта Share Tech Mono по ссылке */
         @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
         
+        /* Переменные базовых цветов */
         :root {
-            --primary: #00ff41;
-            --secondary: #008f11;
-            --dark: #0d0208;
-            --gray: #1a1a1a;
-            --light: #cccccc;
+            --primary: #00ff41;    /* Основной неоново-зеленый цвет */
+            --secondary: #008f11;  /* Вторичный темно-зеленый цвет */
+            --dark: #0d0208;       /* Очень темный фон (почти черный) */
+            --gray: #191919;       /* Темно-серый для элементов */
+            --light: #cccccc;      /* Светлый текст */
         }
         
+        /* Корневой стиль сайта */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
+        /* Стиль body */
         body {
             font-family: 'Share Tech Mono', monospace;
             background-color: var(--dark);
@@ -29,6 +34,7 @@
             overflow-x: hidden;
         }
         
+        /* Основной контейнер: центрированный контент, максимальной шириной */
         .container {
             width: 100%;
             max-width: 1200px;
@@ -36,6 +42,7 @@
             padding: 0 20px;
         }
         
+        /* Стиль хидера */
         header {
             background-color: var(--gray);
             padding: 15px 0;
@@ -45,17 +52,19 @@
             z-index: 100;
         }
         
+        /* Флекс-контейнер для содержимого шапки */
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
+        /* Стили для логотипа */
         .logo-placeholder {
             width: 180px;
             height: 50px;
-            background-color: rgba(0, 255, 65, 0.1);
-            border: 1px dashed var(--primary);
+         /* background-color: rgba(0, 255, 65, 0.1); */
+         /* border: 1px dashed var(--primary); */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -63,7 +72,7 @@
             font-size: 14px;
         }
         
-        /* Бургер-меню */
+        /* Меню */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -77,6 +86,7 @@
             user-select: none;
         }
         
+        /* Стили полосок меню */
         .mobile-menu-btn span {
             position: absolute;
             left: 0;
@@ -86,70 +96,75 @@
             transition: all 0.3s ease;
         }
         
+        /* Позиционирование полосок меню */
         .mobile-menu-btn span:nth-child(1) {
             top: 5px;
         }
-        
         .mobile-menu-btn span:nth-child(2) {
             top: 14px;
         }
-        
         .mobile-menu-btn span:nth-child(3) {
             bottom: 5px;
         }
         
+        /* Чекбокс для управления меню (скрыт) */
         #menu-toggle {
             display: none;
         }
         
+        /* Анимация перехода меню в крестик */
         #menu-toggle:checked ~ .header-content .mobile-menu-btn span:nth-child(1) {
             transform: rotate(45deg);
             top: 14px;
         }
-        
         #menu-toggle:checked ~ .header-content .mobile-menu-btn span:nth-child(2) {
             opacity: 0;
         }
-        
         #menu-toggle:checked ~ .header-content .mobile-menu-btn span:nth-child(3) {
             transform: rotate(-45deg);
             bottom: 14px;
         }
         
+        /* Стили навигационного меню */
         nav ul {
             display: flex;
             list-style: none;
         }
-        
         nav ul li {
             margin-left: 25px;
         }
-        
         nav ul li a {
             color: var(--light);
             text-decoration: none;
             transition: color 0.3s;
-            font-size: 0.95rem;
+            font-size: 1rem; /* 0.95rem */
         }
-        
         nav ul li a:hover {
             color: var(--primary);
         }
         
+        /* Стили герой-секции */
         .hero {
             padding: 60px 0;
             text-align: center;
             border-bottom: 1px solid var(--secondary);
+            background-image: 
+                linear-gradient(to bottom, rgba(0, 200, 0, 0.8), rgba(0, 0, 0, 0.9)),
+                url(res/back.jpeg);
+            background-size: 35rem;
+            background-blend-mode: multiply; /* или 'multiply' для более сильного эффекта */
         }
         
+        /* Адаптивный заголовок с неоновым эффектом */
         .hero h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-size: clamp(2rem, 5vw, 3.5rem); /* Адаптивный размер шрифта */
             margin-bottom: 20px;
             color: var(--primary);
-            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5); /* Неоновое свечение */
             line-height: 1.2;
         }
         
+        /* Адаптивный текст в герой-секции */
         .hero p {
             font-size: clamp(1rem, 2vw, 1.2rem);
             max-width: 800px;
@@ -157,10 +172,12 @@
             padding: 0 15px;
         }
         
+        /* Стили секции продуктов */
         .products {
             padding: 50px 0;
         }
         
+        /* Заголовок секции продуктов */
         .products h2 {
             text-align: center;
             font-size: clamp(1.5rem, 3vw, 2rem);
@@ -168,6 +185,7 @@
             color: var(--primary);
         }
         
+        /* Сетка продуктов с адаптивными колонками */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -175,6 +193,7 @@
             margin-top: 40px;
         }
         
+        /* Карточка продукта */
         .product-card {
             background-color: var(--gray);
             border: 1px solid var(--secondary);
@@ -183,23 +202,27 @@
             border-radius: 5px;
         }
         
+        /* Эффекты при наведении на карточку */
         .product-card:hover {
             border-color: var(--primary);
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0, 255, 65, 0.2);
         }
         
+        /* Заголовок карточки продукта */
         .product-card h3 {
             color: var(--primary);
             margin-bottom: 15px;
             font-size: 1.3rem;
         }
         
+        /* Текст в карточке продукта */
         .product-card p {
             margin-bottom: 20px;
             font-size: 0.95rem;
         }
         
+        /* Стили кнопки */
         .btn {
             display: inline-block;
             background-color: transparent;
@@ -213,17 +236,20 @@
             border-radius: 3px;
         }
         
+        /* Эффекты кнопки при наведении */
         .btn:hover {
             background-color: var(--primary);
             color: var(--dark);
         }
         
+        /* Стили подвала */
         footer {
             background-color: var(--gray);
             padding: 40px 0 20px;
             border-top: 1px solid var(--secondary);
         }
         
+        /* Сетка колонок в подвале */
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -231,12 +257,14 @@
             margin-bottom: 30px;
         }
         
+        /* Заголовки колонок подвала */
         .footer-column h4 {
             color: var(--primary);
             margin-bottom: 20px;
             font-size: 1.1rem;
         }
         
+        /* Списки в подвале */
         .footer-column ul {
             list-style: none;
         }
@@ -257,6 +285,7 @@
             color: var(--primary);
         }
         
+        /* Копирайт в подвале */
         .copyright {
             text-align: center;
             padding-top: 20px;
@@ -266,6 +295,7 @@
         }
         
         /* Мобильное меню */
+        /* Оверлей для мобильного меню */
         .mobile-menu-overlay {
             position: fixed;
             top: 80px;
@@ -279,6 +309,7 @@
             transition: all 0.3s ease;
         }
         
+        /* Контейнер мобильного меню */
         .mobile-menu {
             position: fixed;
             top: 80px;
@@ -296,6 +327,7 @@
             list-style: none;
         }
         
+        /* Пункты мобильного меню с анимацией появления */
         .mobile-menu ul li {
             margin-bottom: 15px;
             opacity: 0;
@@ -303,6 +335,7 @@
             transition: all 0.3s ease;
         }
         
+        /* Задержки анимации для пунктов меню */
         .mobile-menu ul li:nth-child(1) { transition-delay: 0.1s; }
         .mobile-menu ul li:nth-child(2) { transition-delay: 0.2s; }
         .mobile-menu ul li:nth-child(3) { transition-delay: 0.3s; }
@@ -324,21 +357,24 @@
         }
         
         /* Анимации через чекбокс */
+        /* Показ оверлея при активации меню */
         #menu-toggle:checked ~ .mobile-menu-overlay {
             opacity: 1;
             visibility: visible;
         }
         
+        /* Показ мобильного меню */
         #menu-toggle:checked ~ .mobile-menu {
             transform: translateY(0);
         }
         
+        /* Анимация пунктов меню */
         #menu-toggle:checked ~ .mobile-menu ul li {
             opacity: 1;
             transform: translateX(0);
         }
         
-        /* Блокировка скролла при открытом меню */
+        /* Блокировка скролла при открытом меню (не работает, так как селектор неправильный) */
         #menu-toggle:checked ~ body {
             overflow: hidden;
             height: 100%;
@@ -361,6 +397,7 @@
                 padding: 0 10px;
             }
             
+            /* Адаптация логотипа для мобильных */
             .logo-placeholder {
                 width: 200px;
                 height: 8rem;
@@ -368,14 +405,17 @@
                 border: none;
             }
             
+            /* Показ кнопки меню на мобильных */
             .mobile-menu-btn {
                 display: block;
             }
             
+            /* Скрытие десктопного меню */
             nav.desktop {
                 display: none;
             }
             
+            /* Адаптация герой-секции */
             .hero {
                 padding: 40px 0;
             }
@@ -388,6 +428,7 @@
                 font-size: 1rem;
             }
             
+            /* Адаптация секции продуктов */
             .products {
                 padding: 30px 0;
             }
@@ -397,6 +438,7 @@
                 gap: 20px;
             }
             
+            /* Адаптация подвала */
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: 25px;
@@ -417,6 +459,7 @@
                 padding: 0 15px;
             }
             
+            /* Дальнейшая адаптация логотипа */
             .logo-placeholder {
                 width: 130px;
                 height: 40px;
@@ -424,10 +467,12 @@
                 margin-left: 2rem;
             }
             
+            /* Уменьшение заголовка */
             .hero h1 {
                 font-size: 1.8rem;
             }
             
+            /* Адаптация карточек продуктов */
             .product-card {
                 padding: 15px;
             }
@@ -436,6 +481,7 @@
                 font-size: 1.2rem;
             }
             
+            /* Адаптация кнопок */
             .btn {
                 padding: 7px 15px;
                 font-size: 0.85rem;
@@ -444,7 +490,9 @@
     </style>
 </head>
 <body>
+    
     <input type="checkbox" id="menu-toggle" style="display: none;">
+    
     
     <header>
         <div class="container">
@@ -467,6 +515,7 @@
         </div>
     </header>
     
+    
     <div class="mobile-menu-overlay"></div>
     <div class="mobile-menu">
         <ul>
@@ -477,12 +526,14 @@
         </ul>
     </div>
     
+    
     <section class="hero">
         <div class="container">
             <h1>Neyrobyte</h1>
             <p>Инновационные технологии для цифрового будущего. Разрабатываем передовые решения в области искусственного интеллекта, программирования и сетевых технологий.</p>
         </div>
     </section>
+    
     
     <section class="products">
         <div class="container">
@@ -515,6 +566,7 @@
         </div>
     </section>
     
+    
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -532,17 +584,17 @@
                     <h4>Компания</h4>
                     <ul>
                         <li><a href="#">О нас</a></li>
-                        <li><a href="#">Карьера</a></li>
+                        <li><a href="#">Новости</a></li>
+                        <li><a href="#">Вакансии</a></li>
                         <li><a href="#">Блог</a></li>
-                        <li><a href="#">Пресс-центр</a></li>
+                        <li><a href="#">Инвесторы</a></li>
+                        <li><a href="#">Реклама</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-column">
                     <h4>Поддержка</h4>
                     <ul>
-                        <li><a href="#">Новости</a></li>
-                        <li><a href="#">Вакансии</a></li>
                         <li><a href="#">Документация</a></li>
                         <li><a href="#">Форум</a></li>
                         <li><a href="#">Сообщество</a></li>
@@ -555,9 +607,9 @@
                 <div class="footer-column">
                     <h4>Контакты</h4>
                     <ul>
-                        <li>info@Neyrobyte.tech</li>
-                        <li>+7 (XXX) XXX-XX-XX</li>
-                        <li>г. Bhoston, Tremont street 18</li>
+                        <li>info@Neyrobyte.inc</li>
+                        <li>+7 (777) 777-77-77</li>
+                        <li>s. Bhoston, Tremont street 18</li>
                     </ul>
                 </div>
             </div>
@@ -567,5 +619,6 @@
             </div>
         </div>
     </footer>
+    
 </body>
 </html>
