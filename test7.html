@@ -170,7 +170,7 @@
             background-image: 
                 linear-gradient(to bottom, rgba(0, 200, 40, 0.8), rgba(0, 0, 0, 0.9)),
                 url(res/back.webp);
-            background-size: 170%;
+            background-size: 100%;
             background-blend-mode: multiply;
         }
         
@@ -452,7 +452,7 @@
         
         .slider-container {
             position: relative;
-            max-width: 100%;
+            max-width: 800px;
             margin: 30px auto 0;
             overflow: hidden;
             height: 250px;
@@ -462,11 +462,11 @@
             display: flex;
             width: 300%;
             height: 100%;
-            animation: slide 15s infinite;
+            transition: transform 0.5s ease;
         }
         
         .slide {
-            width: 100%;
+            width: 33.333%;
             flex-shrink: 0;
             padding: 0 15px;
         }
@@ -487,30 +487,12 @@
             font-size: 1.3rem;
         }
         
-        @keyframes slide {
-            0% {
-                transform: translateX(0);
-            }
-            28% {
-                transform: translateX(0);
-            }
-            33.33% {
-                transform: translateX(-33.333%);
-            }
-            61.33% {
-                transform: translateX(-33.333%);
-            }
-            66.66% {
-                transform: translateX(-66.666%);
-            }
-            94.66% {
-                transform: translateX(-66.666%);
-            }
-            100% {
-                transform: translateX(0);
-            }
+        /* Скрытые радиокнопки для управления слайдером */
+        .slider-radio {
+            display: none;
         }
         
+        /* Навигационные точки */
         .slider-nav {
             display: flex;
             justify-content: center;
@@ -524,40 +506,53 @@
             background-color: var(--secondary);
             margin: 0 5px;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            transition: background-color 0.3s;
         }
         
-        .slider-dot::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 100%;
+        /* Анимация слайдера */
+        #slide1:checked ~ .slider-container .slider-track {
+            transform: translateX(0);
+        }
+        
+        #slide2:checked ~ .slider-container .slider-track {
+            transform: translateX(-33.333%);
+        }
+        
+        #slide3:checked ~ .slider-container .slider-track {
+            transform: translateX(-66.666%);
+        }
+        
+        /* Подсветка активной точки */
+        #slide1:checked ~ .slider-nav .slider-dot:nth-child(1),
+        #slide2:checked ~ .slider-nav .slider-dot:nth-child(2),
+        #slide3:checked ~ .slider-nav .slider-dot:nth-child(3) {
             background-color: var(--primary);
-            animation: none;
         }
         
-        .slider-dot:nth-child(1)::after {
-            animation: dotProgress 5s linear infinite;
-        }
-        
-        .slider-dot:nth-child(2)::after {
-            animation: dotProgress 5s linear infinite 5s;
-        }
-        
-        .slider-dot:nth-child(3)::after {
-            animation: dotProgress 5s linear infinite 10s;
-        }
-        
-        @keyframes dotProgress {
-            0% {
-                width: 0;
+        /* Автоматическая анимация */
+        @keyframes slide {
+            0%, 28% {
+                transform: translateX(0);
+            }
+            33.33%, 61% {
+                transform: translateX(-33.333%);
+            }
+            66.66%, 94% {
+                transform: translateX(-66.666%);
             }
             100% {
-                width: 100%;
+                transform: translateX(0);
             }
+        }
+        
+        /* Применяем анимацию, если ни один радио-инпут не выбран */
+        .slider-track {
+            animation: slide 15s infinite;
+        }
+        
+        /* Останавливаем анимацию при выборе слайда */
+        .slider-radio:checked ~ .slider-container .slider-track {
+            animation: none;
         }
         
         /* Адаптация для планшетов */
@@ -758,6 +753,11 @@
         </div>
     </section>
     
+    <!-- Управление слайдером (скрытые радиокнопки) -->
+    <input type="radio" name="slider" id="slide1" class="slider-radio" checked>
+    <input type="radio" name="slider" id="slide2" class="slider-radio">
+    <input type="radio" name="slider" id="slide3" class="slider-radio">
+    
     <!-- Слайдер технологий -->
     <section class="tech-slider">
         <div class="container">
@@ -785,9 +785,9 @@
                 </div>
             </div>
             <div class="slider-nav">
-                <div class="slider-dot"></div>
-                <div class="slider-dot"></div>
-                <div class="slider-dot"></div>
+                <label for="slide1" class="slider-dot"></label>
+                <label for="slide2" class="slider-dot"></label>
+                <label for="slide3" class="slider-dot"></label>
             </div>
         </div>
     </section>
