@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>test card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: #171717;
+            color: #cccccc;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            padding: 50px 8px;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .parent {
+            height: 400px;
+            width: 300px;
+            padding: 20px;
+            perspective: 1000px;
+        }
+        
+        .card {
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease-in-out;
+            border: solid #050505 0.1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ff41, #005f1f, #00ff41);
+            z-index: -1;
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            filter: blur(50px);
+        }
+        
+        .card:hover {
+            transform: rotate3d(6.5, 1, 0, 30deg);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+        
+        .card:hover::before {
+            opacity: 0.7;
+        }
+        
+        .card-background {
+            height: 30%;
+            background-image: 
+                linear-gradient(to bottom, rgba(0, 200, 40, 0.8), rgba(0, 0, 0, 0.9)),
+                url(res/grunge.webp);
+            background-size: 150%;
+            background-blend-mode: multiply;
+            background-position: center center;
+            transform: translateZ(-20px);
+            transition: all 0.5s ease-in-out;
+            position: relative;
+            text-align: center;
+            padding-top: 15%;
+            color: #00ff41;
+        }
+        
+        .card-background h3 {
+            position: relative;
+            transform: translateZ(0) scale(1);
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .card-background h3::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            color: rgba(0, 255, 65, 0.2);
+            z-index: -1;
+            opacity: 0;
+            transform: translateZ(-11px) translateY(5px) translateX(-7px);
+            filter: blur(2px);
+            transition: all 0.5s ease-in-out;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .card:hover .card-background {
+            background-position: 200% 0%;
+            transform: translateZ(-40px) rotate3d(10, 0, 0, 0deg);
+        }
+        
+        .card:hover .card-background h3 {
+            transform: translateZ(0px) translateY(-7px) translateX(5px) scale(1.08);
+        }
+        
+        .card:hover .card-background h3::after {
+            opacity: 1;
+            transform: translateZ(-11px) translateY(5px) translateX(-7px);
+            filter: blur(2px);
+        }
+        
+        .card-content {
+            padding: 8%;
+            background-color: #050505;
+            border-top: double #103f20 2.7px;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            transform: translateZ(0);
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .card:hover .card-content {
+            transform: translateZ(20px);
+        }
+        
+        .card-content p {
+            transition: all 0.5s ease-in-out;
+            transform: translateZ(0) scale(1);
+            position: relative;
+            font-size: 1em;
+        }
+        
+        .card-content p::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            color: rgba(255, 255, 255, 0.2);
+            z-index: -1;
+            opacity: 0;
+            transform: translateZ(-11px) translateY(5px) translateX(-7px);
+            filter: blur(2px);
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .card:hover .card-content p {
+            transform: translateZ(0px) translateY(-5px) translateX(5px) scale(1.05);
+        }
+        
+        .card:hover .card-content p::after {
+            opacity: 1;
+            transform: translateZ(-11px) translateY(5px) translateX(-7px);
+            filter: blur(2px);
+        }
+        
+        .date-box {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            height: 40px;
+            width: 40px;
+            background-image: 
+                linear-gradient(to bottom, rgba(0, 200, 40, 0.8), rgba(0, 0, 0, 1)),
+                url(res/cubes.jpg);
+            background-size: 200%;
+            background-blend-mode: multiply;
+            background-position: left top;
+            border: double #305f30 0.1rem;
+            border-radius: 6px;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            transform: translateZ(10px);
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .card:hover .date-box {
+            transform: translateZ(30px);
+        }
+        
+        .date-box .date {
+            font-size: 16px;
+            font-weight: 900;
+            color: #346934;
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .card:hover .date-box .date {
+            color: #00ff41;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+        }
+        
+        .card2 .card-background {
+            filter: hue-rotate(150deg);
+        }
+        .card3 .card-background {
+            filter: hue-rotate(300deg);
+        }
+        .card4 .card-background {
+            filter: hue-rotate(90deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Карточка 1 -->
+        <div class="parent">
+            <div class="card">
+                <div class="card-background">
+                    <div class="date-box">
+                        <div class="date">15</div>
+                    </div>
+                    <h3 data-text="Neyrobyte">Neyrobyte</h3>
+                </div>
+                <div class="card-content">
+                    <p data-text="Инновационные технологии для цифрового будущего">Инновационные технологии для цифрового будущего</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
