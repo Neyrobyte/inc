@@ -1,1 +1,21 @@
-vless://8e6acce9-8b56-7190-d491-7d84f8189e26@213.232.120.2:443?security=reality&encryption=none&pbk=6h7z2IG6_BopO2tGTRAytfMOWbcXxRWghb2c9IILJkA&headerType=none&fp=chrome&type=tcp&flow=xtls-rprx-vision&sni=speed.cloudflare.com#%40HiByeVPNN
+{
+    // другие ваши настройки...
+    
+    "background.enabled": true,
+    "background.useDefault": false,
+    "background.customImages": [
+        "file:///C:/Users/YourName/Pictures/background.jpg"
+    ],
+    "background.style": {
+        "content": "''",
+        "pointer-events": "none",
+        "position": "absolute",
+        "z-index": "99999",
+        "width": "100%",
+        "height": "100%",
+        "background-position": "center",
+        "background-repeat": "no-repeat",
+        "background-size": "cover",
+        "opacity": 0.1
+    }
+}
