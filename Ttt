@@ -1,8 +1,0 @@
-Windows Registry Editor Version 5.00
-
-[HKEY_CLASSES_ROOT\*\shell\Notepad++]
-@="Открыть в Notepad++"
-"Icon"="C:\\Program Files\\Notepad++\\notepad++.exe,0"
-
-[HKEY_CLASSES_ROOT\*\shell\Notepad++\command]
-@="\"C:\\Program Files\\Notepad++\\notepad++.exe\" \"%1\""
