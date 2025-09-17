@@ -1,4 +1,4 @@
 shape = input("Введите название фигуры [круг, квадрат, треугольник]: ").strip().lower()
-shp = lambda shape: input("Введите радиус: " if shape == "круг" else "Введите сторону: " if shape == "квадрат" else "Введите основание и высоту одним числом (они равны): " if shape == "треугольник" else "Неизвестная фигура.")
+shp = lambda shape: input("Введите радиус: " if shape == "круг" else "Введите сторону: " if shape == "квадрат" else "Введите основание и высоту одним числом (они равны): " if shape == "треугольник" else exec("print('Неизвестная фигура.'); exit()")).strip()
 operation = lambda zt: 3.14 * int(zt) ** 2 if shape == "круг" else int(zt) ** 2 if shape == "квадрат" else 0.5 * int(zt) ** 2 if shape == "треугольник" else "Неизвестная фигура."
-print(f"Площадь выбранной фигуры: {operation(shp(shape))}")
+print(f"Площадь выбранной фигуры: {operation(shp(shape)):.2f}")
