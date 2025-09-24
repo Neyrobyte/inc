@@ -1,4 +1,1 @@
-shape = input("Введите название фигуры [круг, квадрат, треугольник]: ").strip().lower()
-shp = lambda shape: input("Введите радиус: " if shape == "круг" else "Введите сторону: " if shape == "квадрат" else "Введите основание и высоту одним числом (они равны): " if shape == "треугольник" else exec("print('Неизвестная фигура.'); exit()")).strip()
-operation = lambda zt: 3.14 * int(zt) ** 2 if shape == "круг" else int(zt) ** 2 if shape == "квадрат" else 0.5 * int(zt) ** 2 if shape == "треугольник" else "Неизвестная фигура."
-print(f"Площадь выбранной фигуры: {operation(shp(shape)):.2f}")
+vless://e977d854-33f3-4345-abee-bf3fa9a6d880@37.233.82.140:40478?security=reality&encryption=none&pbk=lcJ0LSh015XRfz5-7wB_hln3-bq5ZatFgPugSUCrdR0&headerType=none&fp=chrome&type=tcp&sni=yahoo.com&sid=3c#ZZXZZ%20Viturey
