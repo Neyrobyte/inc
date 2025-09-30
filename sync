@@ -1,0 +1,39 @@
+def print_dict(d):
+    print("Текущий словарь: ")
+    for i in d:
+        print(f">   Слово: {i}, Вхождений: {d.get(i)}")
+
+
+words_dict = {}
+
+while True:
+    words = input("Введите строку слов, разделенных пробелами: ")
+    if (words.lower() in ["stop", "exit", "quit", "end"]) or (not words):
+        print("Выход из программы.")
+        break
+
+    words = words.split()
+    for word in words:
+        words_dict[word] = words_dict.get(word, 0) + 1
+
+    print_dict(words_dict)
+
+
+min_len_word = input("Введите минимальную длину слова для фильтрации: ")
+
+for word in list(words_dict):
+    if (len(word)) < (int(min_len_word)):
+        del words_dict[word]
+
+if (not words_dict):
+    print("Словарь пуст.")
+    exit()
+
+print(f"Слова длиной не менее {min_len_word}:")
+print_dict(words_dict)
+
+count_in = 0
+for i in words_dict:
+    count_in += words_dict[i]
+
+print("Общее число вхождений всех слов: ", count_in)
