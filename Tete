@@ -1,100 +1,180 @@
 import random
 
-class AdventureGenerator:
+class Player:
+    """Класс для представления игрока"""
     def __init__(self):
-        self.locations = ['лесу', 'пещере', 'замке', 'деревне', 'горах', 'подземелье']
-        self.characters = ['волшебника', 'рыцаря', 'эльфа', 'дракона', 'разбойника', 'короля']
-        self.items = ['меч', 'магический артефакт', 'карту сокровищ', 'зелье', 'древний свиток', 'ключ']
+        self.hp = 10
+        self.inventory = []
     
-    def generate_adventure(self):
-        """Генерирует случайное приключение"""
-        location = random.choice(self.locations)
-        character = random.choice(self.characters)
-        item = random.choice(self.items)
-        
-        return f"Ты в {location}, встретил {character} и нашел {item}"
+    def add_item(self, item):
+        """Добавить предмет в инвентарь"""
+        self.inventory.append(item)
+        print(f"🎁 Вы получили: {item}")
+    
+    def change_hp(self, amount):
+        """Изменить HP игрока"""
+        self.hp += amount
+        if amount > 0:
+            print(f"💚 HP +{amount}")
+        else:
+            print(f"💔 HP {amount}")
+    
+    def is_alive(self):
+        """Проверить, жив ли игрок"""
+        return self.hp > 0
+    
+    def get_status(self):
+        """Получить текущий статус игрока"""
+        return f"❤️ HP: {self.hp} | 🎒 Инвентарь: {', '.join(self.inventory) if self.inventory else 'пусто'}"
 
-class AdventureGame:
+class QuestGame:
+    """Класс для управления игрой"""
+    
     def __init__(self):
-        self.generator = AdventureGenerator()
-        self.is_playing = True
+        self.player = Player()
+        self.events = [
+            "Вы встретили разъяренного гоблина!",
+            "Вы нашли старый сундук.",
+            "Вы наткнулись на загадочного торговца.",
+            "Вы попали в ловушку!",
+            "Вы обнаружили целебный источник.",
+            "На вас напала стая волков.",
+            "Вы нашли заброшенную хижину.",
+            "Перед вами появился древний дух."
+        ]
+        self.actions = ["атаковать", "исследовать", "убежать", "поговорить", "использовать предмет"]
+        self.items = ["меч", "зелье здоровья", "щит", "ключ", "карта", "факел", "лук", "магический амулет"]
+    
+    def shuffle_actions(self):
+        """Перемешать доступные действия"""
+        random.shuffle(self.actions)
+        return self.actions.copy()
+    
+    def process_event(self, event, action):
+        """Обработать событие и действие игрока"""
+        print(f"\n📖 Событие: {event}")
+        print(f"🎯 Ваше действие: {action}")
+        
+        if "гоблин" in event.lower():
+            if action == "атаковать":
+                print("⚔️ Вы победили гоблина и нашли золото!")
+                self.player.add_item("золото")
+            elif action == "убежать":
+                print("🏃 Вы успешно сбежали, но получили легкое ранение.")
+                self.player.change_hp(-1)
+            else:
+                print("🤔 Это действие не было эффективным против гоблина.")
+        
+        elif "сундук" in event.lower():
+            if action == "исследовать":
+                item = random.choice(self.items)
+                self.player.add_item(item)
+            else:
+                print("📦 Вы не смогли открыть сундук.")
+        
+        elif "торговец" in event.lower():
+            if action == "поговорить":
+                print("🧙 Торговец дал вам полезный предмет!")
+                self.player.add_item(random.choice(self.items))
+            else:
+                print("😠 Торговец обиделся и ушел.")
+        
+        elif "ловушка" in event.lower():
+            if action == "убежать":
+                print("🤸 Вы ловко избежали ловушки!")
+            else:
+                print("💥 Вы попали в ловушку!")
+                self.player.change_hp(-2)
+        
+        elif "источник" in event.lower():
+            if action == "исследовать":
+                print("💧 Вы выпили целебной воды!")
+                self.player.change_hp(2)
+            else:
+                print("💦 Вы прошли мимо источника.")
+        
+        elif "волк" in event.lower():
+            if action == "атаковать":
+                print("🐺 Вы отогнали волков!")
+                self.player.add_item("волчья шкура")
+            else:
+                print("🐾 Волки вас покусали!")
+                self.player.change_hp(-3)
+        
+        elif "хижина" in event.lower():
+            if action == "исследовать":
+                print("🏠 В хижине вы нашли полезные предметы!")
+                self.player.add_item(random.choice(self.items))
+                self.player.add_item("еда")
+            else:
+                print("🚪 Вы не стали исследовать хижину.")
+        
+        elif "дух" in event.lower():
+            if action == "поговорить":
+                print("👻 Дух благословил вас магической силой!")
+                self.player.change_hp(3)
+                self.player.add_item("благословение духа")
+            else:
+                print("😱 Дух разгневался и наложил проклятие!")
+                self.player.change_hp(-2)
+        
+        else:
+            print("🤷 Ничего особенного не произошло.")
     
     def start_game(self):
-        """Запускает игру"""
-        print("Добро пожаловать в генератор приключений!")
-        print("Нажмите Enter для нового приключения или введите 'стоп' для выхода")
+        """Запустить игру"""
+        print("🎮 Добро пожаловать в Случайный Квест!")
+        print("=" * 50)
         
-        while self.is_playing:
-            input_text = input("\n>>> ").strip().lower()
-            
-            if input_text == 'стоп':
-                self.stop_game()
-            else:
-                adventure = self.generator.generate_adventure()
-                print(f"🎮 {adventure}")
-    
-    def stop_game(self):
-        """Останавливает игру"""
-        self.is_playing = False
-        print("Спасибо за игру! До новых приключений!")
-
-# Альтернативная версия с более расширенной функциональностью
-class EnhancedAdventureGame:
-    def __init__(self):
-        self.generator = AdventureGenerator()
-        self.adventure_count = 0
-        self.is_playing = True
-    
-    def show_stats(self):
-        """Показывает статистику игры"""
-        print(f"\n📊 Статистика: {self.adventure_count} приключений")
-    
-    def show_help(self):
-        """Показывает справку по командам"""
-        print("\n📖 Доступные команды:")
-        print("  Enter - новое приключение")
-        print("  стоп - завершить игру")
-        print("  статистика - показать статистику")
-        print("  помощь - показать эту справку")
-    
-    def start_game(self):
-        """Запускает расширенную версию игры"""
-        print("🌟 Добро пожаловать в Генератор Приключений! 🌟")
-        self.show_help()
+        round_count = 1
         
-        while self.is_playing:
-            command = input("\n>>> ").strip().lower()
+        while self.player.is_alive():
+            print(f"\n🌀 Раунд {round_count}")
+            print(self.player.get_status())
+            print("-" * 30)
             
-            if command == 'стоп':
-                self.stop_game()
-            elif command == 'статистика':
-                self.show_stats()
-            elif command == 'помощь':
-                self.show_help()
-            elif command == '':
-                self.generate_new_adventure()
-            else:
-                print("❌ Неизвестная команда. Введите 'помощь' для списка команд.")
+            # Выбор случайного события
+            event = random.choice(self.events)
+            
+            # Перемешивание и показ доступных действий
+            available_actions = self.shuffle_actions()
+            print(f"📋 Доступные действия: {', '.join(available_actions)}")
+            
+            # Ввод действия от игрока
+            while True:
+                action = input("🎯 Выберите действие (или 'стоп' для выхода): ").lower().strip()
+                
+                if action == "стоп":
+                    print("\n⏹️ Игра завершена по вашему желанию.")
+                    self.show_final_stats()
+                    return
+                
+                if action in available_actions:
+                    break
+                else:
+                    print("❌ Неверное действие! Выберите из доступных вариантов.")
+            
+            # Обработка события
+            self.process_event(event, action)
+            
+            # Проверка состояния игрока
+            if not self.player.is_alive():
+                print("\n💀 Вы погибли! Игра окончена.")
+                self.show_final_stats()
+                return
+            
+            round_count += 1
     
-    def generate_new_adventure(self):
-        """Генерирует новое приключение"""
-        adventure = self.generator.generate_adventure()
-        self.adventure_count += 1
-        print(f"🎮 Приключение #{self.adventure_count}: {adventure}")
-    
-    def stop_game(self):
-        """Останавливает игру"""
-        self.is_playing = False
-        print(f"\n🎯 Игра завершена!")
-        print(f"📊 Всего приключений: {self.adventure_count}")
-        print("Спасибо за игру! Ждем снова! 🎉")
+    def show_final_stats(self):
+        """Показать финальную статистику"""
+        print("\n" + "=" * 50)
+        print("📊 ИТОГИ ИГРЫ:")
+        print(f"❤️ Финальное HP: {self.player.hp}")
+        print(f"🎒 Финальный инвентарь: {', '.join(self.player.inventory) if self.player.inventory else 'пусто'}")
+        print(f"📦 Всего предметов: {len(self.player.inventory)}")
+        print("=" * 50)
 
 # Запуск игры
 if __name__ == "__main__":
-    # Простая версия
-    # game = AdventureGame()
-    # game.start_game()
-    
-    # Расширенная версия
-    enhanced_game = EnhancedAdventureGame()
-    enhanced_game.start_game()
+    game = QuestGame()
+    game.start_game()
