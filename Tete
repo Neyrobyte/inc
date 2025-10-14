@@ -1,180 +1,271 @@
 import random
+from utils import ColorPrint as cp, PrintFormatter as pf
 
+# Цвета
+red = cp.COLORS.get("red")
+green = cp.COLORS.get("green")
+reset = cp.COLORS.get("reset")
+
+
+# Класс для представления игрока
 class Player:
-    """Класс для представления игрока"""
     def __init__(self):
         self.hp = 10
         self.inventory = []
     
+    # Добавить предмет в инвентарь
     def add_item(self, item):
-        """Добавить предмет в инвентарь"""
         self.inventory.append(item)
-        print(f"🎁 Вы получили: {item}")
+        print(f"Вы получили: {item}")
     
+    # Изменить HP игрока
     def change_hp(self, amount):
-        """Изменить HP игрока"""
         self.hp += amount
         if amount > 0:
-            print(f"💚 HP +{amount}")
+            print(f"HP +{amount}")
         else:
-            print(f"💔 HP {amount}")
+            print(f"HP {amount}")
     
+    # Проверить, жив ли игрок
     def is_alive(self):
-        """Проверить, жив ли игрок"""
         return self.hp > 0
     
+    # Получить текущий статус игрока
     def get_status(self):
-        """Получить текущий статус игрока"""
-        return f"❤️ HP: {self.hp} | 🎒 Инвентарь: {', '.join(self.inventory) if self.inventory else 'пусто'}"
+        return f"HP: {self.hp} | Инвентарь: {', '.join(self.inventory) if self.inventory else 'пусто'}"
 
-class QuestGame:
-    """Класс для управления игрой"""
-    
-    def __init__(self):
-        self.player = Player()
-        self.events = [
-            "Вы встретили разъяренного гоблина!",
-            "Вы нашли старый сундук.",
-            "Вы наткнулись на загадочного торговца.",
-            "Вы попали в ловушку!",
-            "Вы обнаружили целебный источник.",
-            "На вас напала стая волков.",
-            "Вы нашли заброшенную хижину.",
-            "Перед вами появился древний дух."
-        ]
-        self.actions = ["атаковать", "исследовать", "убежать", "поговорить", "использовать предмет"]
-        self.items = ["меч", "зелье здоровья", "щит", "ключ", "карта", "факел", "лук", "магический амулет"]
-    
-    def shuffle_actions(self):
-        """Перемешать доступные действия"""
-        random.shuffle(self.actions)
-        return self.actions.copy()
-    
-    def process_event(self, event, action):
-        """Обработать событие и действие игрока"""
-        print(f"\n📖 Событие: {event}")
-        print(f"🎯 Ваше действие: {action}")
-        
-        if "гоблин" in event.lower():
-            if action == "атаковать":
-                print("⚔️ Вы победили гоблина и нашли золото!")
-                self.player.add_item("золото")
-            elif action == "убежать":
-                print("🏃 Вы успешно сбежали, но получили легкое ранение.")
-                self.player.change_hp(-1)
-            else:
-                print("🤔 Это действие не было эффективным против гоблина.")
-        
-        elif "сундук" in event.lower():
-            if action == "исследовать":
-                item = random.choice(self.items)
-                self.player.add_item(item)
-            else:
-                print("📦 Вы не смогли открыть сундук.")
-        
-        elif "торговец" in event.lower():
-            if action == "поговорить":
-                print("🧙 Торговец дал вам полезный предмет!")
-                self.player.add_item(random.choice(self.items))
-            else:
-                print("😠 Торговец обиделся и ушел.")
-        
-        elif "ловушка" in event.lower():
-            if action == "убежать":
-                print("🤸 Вы ловко избежали ловушки!")
-            else:
-                print("💥 Вы попали в ловушку!")
-                self.player.change_hp(-2)
-        
-        elif "источник" in event.lower():
-            if action == "исследовать":
-                print("💧 Вы выпили целебной воды!")
-                self.player.change_hp(2)
-            else:
-                print("💦 Вы прошли мимо источника.")
-        
-        elif "волк" in event.lower():
-            if action == "атаковать":
-                print("🐺 Вы отогнали волков!")
-                self.player.add_item("волчья шкура")
-            else:
-                print("🐾 Волки вас покусали!")
-                self.player.change_hp(-3)
-        
-        elif "хижина" in event.lower():
-            if action == "исследовать":
-                print("🏠 В хижине вы нашли полезные предметы!")
-                self.player.add_item(random.choice(self.items))
-                self.player.add_item("еда")
-            else:
-                print("🚪 Вы не стали исследовать хижину.")
-        
-        elif "дух" in event.lower():
-            if action == "поговорить":
-                print("👻 Дух благословил вас магической силой!")
-                self.player.change_hp(3)
-                self.player.add_item("благословение духа")
-            else:
-                print("😱 Дух разгневался и наложил проклятие!")
-                self.player.change_hp(-2)
-        
-        else:
-            print("🤷 Ничего особенного не произошло.")
+
+# Класс игры
+class Game:
+    self.player 
     
     def start_game(self):
-        """Запустить игру"""
-        print("🎮 Добро пожаловать в Случайный Квест!")
-        print("=" * 50)
+        print("Генератор Приключений!")
+        self.show_help()
         
-        round_count = 1
-        
-        while self.player.is_alive():
-            print(f"\n🌀 Раунд {round_count}")
-            print(self.player.get_status())
-            print("-" * 30)
-            
-            # Выбор случайного события
-            event = random.choice(self.events)
-            
-            # Перемешивание и показ доступных действий
-            available_actions = self.shuffle_actions()
-            print(f"📋 Доступные действия: {', '.join(available_actions)}")
-            
-            # Ввод действия от игрока
-            while True:
-                action = input("🎯 Выберите действие (или 'стоп' для выхода): ").lower().strip()
-                
-                if action == "стоп":
-                    print("\n⏹️ Игра завершена по вашему желанию.")
-                    self.show_final_stats()
-                    return
-                
-                if action in available_actions:
-                    break
-                else:
-                    print("❌ Неверное действие! Выберите из доступных вариантов.")
-            
-            # Обработка события
-            self.process_event(event, action)
-            
-            # Проверка состояния игрока
-            if not self.player.is_alive():
-                print("\n💀 Вы погибли! Игра окончена.")
-                self.show_final_stats()
-                return
-            
-            round_count += 1
-    
-    def show_final_stats(self):
-        """Показать финальную статистику"""
-        print("\n" + "=" * 50)
-        print("📊 ИТОГИ ИГРЫ:")
-        print(f"❤️ Финальное HP: {self.player.hp}")
-        print(f"🎒 Финальный инвентарь: {', '.join(self.player.inventory) if self.player.inventory else 'пусто'}")
-        print(f"📦 Всего предметов: {len(self.player.inventory)}")
-        print("=" * 50)
+    def show_help(self):
+        print("\nДоступные команды:")
+        print(f" > {green}[Enter]{reset} - новое приключение")
+        print(f" > {green}stop{reset} - завершить игру")
+        print(f" > {green}stats{reset} - показать статистику")
+        print(f" > {green}help{reset} - показать эту справку")
 
-# Запуск игры
-if __name__ == "__main__":
-    game = QuestGame()
-    game.start_game()
+    def command_parser(self):
+
+# # Генератор
+# class Generator:
+#     EVENTS =  ("встретил странного торговца", "попал в засаду разбойников", "нашёл древний храм", "поймал редкую рыбу", "появился таинственный маг")
+#     ACTIONS = ("атаковать", "защититься", "поговорить", "побежать", "исследовать")
+#     ITEMS =   ("меч", "щит", "зелье здоровья", "магический камень", "ключ от сундука")
+
+#     def gen(self):
+#         event = f"{green}{random.choice(self.EVENTS)}{reset}"
+#         action = f"{green}{random.choice(self.ACTIONS)}{reset}"
+#         item = f"{green}{random.choice(self.ITEMS)}{reset}"
+#         return (f"Ты в локации \"{event}\", встретил нпс \"{action}\" и нашел предмет \"{item}\"")
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# import random
+
+# class Player:
+#     """Класс для представления игрока"""
+#     def __init__(self):
+#         self.hp = 10
+#         self.inventory = []
+    
+#     def add_item(self, item):
+#         """Добавить предмет в инвентарь"""
+#         self.inventory.append(item)
+#         print(f"Вы получили: {item}")
+    
+#     def change_hp(self, amount):
+#         """Изменить HP игрока"""
+#         self.hp += amount
+#         if amount > 0:
+#             print(f"HP +{amount}")
+#         else:
+#             print(f"HP {amount}")
+    
+#     def is_alive(self):
+#         """Проверить, жив ли игрок"""
+#         return self.hp > 0
+    
+#     def get_status(self):
+#         """Получить текущий статус игрока"""
+#         return f"HP: {self.hp} | Инвентарь: {', '.join(self.inventory) if self.inventory else 'пусто'}"
+
+# class QuestGame:
+#     """Класс для управления игрой"""
+    
+#     def __init__(self):
+#         self.player = Player()
+#         self.events = [
+#             "Вы встретили разъяренного гоблина!",
+#             "Вы нашли старый сундук.",
+#             "Вы наткнулись на загадочного торговца.",
+#             "Вы попали в ловушку!",
+#             "Вы обнаружили целебный источник.",
+#             "На вас напала стая волков.",
+#             "Вы нашли заброшенную хижину.",
+#             "Перед вами появился древний дух."
+#         ]
+#         self.actions = ["атаковать", "исследовать", "убежать", "поговорить", "использовать предмет"]
+#         self.items = ["меч", "зелье здоровья", "щит", "ключ", "карта", "факел", "лук", "магический амулет"]
+    
+#     def shuffle_actions(self):
+#         """Перемешать доступные действия"""
+#         random.shuffle(self.actions)
+#         return self.actions.copy()
+    
+#     def process_event(self, event, action):
+#         """Обработать событие и действие игрока"""
+#         print(f"Событие: {event}")
+#         print(f"Ваше действие: {action}")
+        
+#         if "гоблин" in event.lower():
+#             if action == "атаковать":
+#                 print("Вы победили гоблина и нашли золото!")
+#                 self.player.add_item("золото")
+#             elif action == "убежать":
+#                 print("Вы успешно сбежали, но получили легкое ранение.")
+#                 self.player.change_hp(-1)
+#             else:
+#                 print("Это действие не было эффективным против гоблина.")
+        
+#         elif "сундук" in event.lower():
+#             if action == "исследовать":
+#                 item = random.choice(self.items)
+#                 self.player.add_item(item)
+#             else:
+#                 print("Вы не смогли открыть сундук.")
+        
+#         elif "торговец" in event.lower():
+#             if action == "поговорить":
+#                 print("Торговец дал вам полезный предмет!")
+#                 self.player.add_item(random.choice(self.items))
+#             else:
+#                 print("Торговец обиделся и ушел.")
+        
+#         elif "ловушка" in event.lower():
+#             if action == "убежать":
+#                 print("Вы ловко избежали ловушки!")
+#             else:
+#                 print("Вы попали в ловушку!")
+#                 self.player.change_hp(-2)
+        
+#         elif "источник" in event.lower():
+#             if action == "исследовать":
+#                 print("Вы выпили целебной воды!")
+#                 self.player.change_hp(2)
+#             else:
+#                 print("Вы прошли мимо источника.")
+        
+#         elif "волк" in event.lower():
+#             if action == "атаковать":
+#                 print("Вы отогнали волков!")
+#                 self.player.add_item("волчья шкура")
+#             else:
+#                 print("Волки вас покусали!")
+#                 self.player.change_hp(-3)
+        
+#         elif "хижина" in event.lower():
+#             if action == "исследовать":
+#                 print("В хижине вы нашли полезные предметы!")
+#                 self.player.add_item(random.choice(self.items))
+#                 self.player.add_item("еда")
+#             else:
+#                 print("Вы не стали исследовать хижину.")
+        
+#         elif "дух" in event.lower():
+#             if action == "поговорить":
+#                 print("Дух благословил вас магической силой!")
+#                 self.player.change_hp(3)
+#                 self.player.add_item("благословение духа")
+#             else:
+#                 print("Дух разгневался и наложил проклятие!")
+#                 self.player.change_hp(-2)
+        
+#         else:
+#             print("Ничего особенного не произошло.")
+    
+#     def start_game(self):
+#         """Запустить игру"""
+#         print("Добро пожаловать в Случайный Квест!")
+#         print("=" * 50)
+        
+#         round_count = 1
+        
+#         while self.player.is_alive():
+#             print(f"\nРаунд {round_count}")
+#             print(self.player.get_status())
+#             print("-" * 30)
+            
+#             # Выбор случайного события
+#             event = random.choice(self.events)
+            
+#             # Перемешивание и показ доступных действий
+#             available_actions = self.shuffle_actions()
+#             print(f"Доступные действия: {', '.join(available_actions)}")
+            
+#             # Ввод действия от игрока
+#             while True:
+#                 action = input("Выберите действие (или 'стоп' для выхода): ").lower().strip()
+                
+#                 if action == "стоп":
+#                     print("\nИгра завершена по вашему желанию.")
+#                     self.show_final_stats()
+#                     return
+                
+#                 if action in available_actions:
+#                     break
+#                 else:
+#                     print("Неверное действие! Выберите из доступных вариантов.")
+            
+#             # Обработка события
+#             self.process_event(event, action)
+            
+#             # Проверка состояния игрока
+#             if not self.player.is_alive():
+#                 print("\nВы погибли! Игра окончена.")
+#                 self.show_final_stats()
+#                 return
+            
+#             round_count += 1
+    
+#     def show_final_stats(self):
+#         """Показать финальную статистику"""
+#         print("\n" + "=" * 50)
+#         print("ИТОГИ ИГРЫ:")
+#         print(f"Финальное HP: {self.player.hp}")
+#         print(f"Финальный инвентарь: {', '.join(self.player.inventory) if self.player.inventory else 'пусто'}")
+#         print(f"Всего предметов: {len(self.player.inventory)}")
+#         print("=" * 50)
+
+# # Запуск игры
+# if __name__ == "__main__":
+#     game = QuestGame()
+#     game.start_game()
