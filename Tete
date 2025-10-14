@@ -1,0 +1,100 @@
+import random
+
+class AdventureGenerator:
+    def __init__(self):
+        self.locations = ['лесу', 'пещере', 'замке', 'деревне', 'горах', 'подземелье']
+        self.characters = ['волшебника', 'рыцаря', 'эльфа', 'дракона', 'разбойника', 'короля']
+        self.items = ['меч', 'магический артефакт', 'карту сокровищ', 'зелье', 'древний свиток', 'ключ']
+    
+    def generate_adventure(self):
+        """Генерирует случайное приключение"""
+        location = random.choice(self.locations)
+        character = random.choice(self.characters)
+        item = random.choice(self.items)
+        
+        return f"Ты в {location}, встретил {character} и нашел {item}"
+
+class AdventureGame:
+    def __init__(self):
+        self.generator = AdventureGenerator()
+        self.is_playing = True
+    
+    def start_game(self):
+        """Запускает игру"""
+        print("Добро пожаловать в генератор приключений!")
+        print("Нажмите Enter для нового приключения или введите 'стоп' для выхода")
+        
+        while self.is_playing:
+            input_text = input("\n>>> ").strip().lower()
+            
+            if input_text == 'стоп':
+                self.stop_game()
+            else:
+                adventure = self.generator.generate_adventure()
+                print(f"🎮 {adventure}")
+    
+    def stop_game(self):
+        """Останавливает игру"""
+        self.is_playing = False
+        print("Спасибо за игру! До новых приключений!")
+
+# Альтернативная версия с более расширенной функциональностью
+class EnhancedAdventureGame:
+    def __init__(self):
+        self.generator = AdventureGenerator()
+        self.adventure_count = 0
+        self.is_playing = True
+    
+    def show_stats(self):
+        """Показывает статистику игры"""
+        print(f"\n📊 Статистика: {self.adventure_count} приключений")
+    
+    def show_help(self):
+        """Показывает справку по командам"""
+        print("\n📖 Доступные команды:")
+        print("  Enter - новое приключение")
+        print("  стоп - завершить игру")
+        print("  статистика - показать статистику")
+        print("  помощь - показать эту справку")
+    
+    def start_game(self):
+        """Запускает расширенную версию игры"""
+        print("🌟 Добро пожаловать в Генератор Приключений! 🌟")
+        self.show_help()
+        
+        while self.is_playing:
+            command = input("\n>>> ").strip().lower()
+            
+            if command == 'стоп':
+                self.stop_game()
+            elif command == 'статистика':
+                self.show_stats()
+            elif command == 'помощь':
+                self.show_help()
+            elif command == '':
+                self.generate_new_adventure()
+            else:
+                print("❌ Неизвестная команда. Введите 'помощь' для списка команд.")
+    
+    def generate_new_adventure(self):
+        """Генерирует новое приключение"""
+        adventure = self.generator.generate_adventure()
+        self.adventure_count += 1
+        print(f"🎮 Приключение #{self.adventure_count}: {adventure}")
+    
+    def stop_game(self):
+        """Останавливает игру"""
+        self.is_playing = False
+        print(f"\n🎯 Игра завершена!")
+        print(f"📊 Всего приключений: {self.adventure_count}")
+        print("Спасибо за игру! Ждем снова! 🎉")
+
+# Запуск игры
+if __name__ == "__main__":
+    # Простая версия
+    # game = AdventureGame()
+    # game.start_game()
+    
+    # Расширенная версия
+    enhanced_game = EnhancedAdventureGame()
+    enhanced_game.start_game()
