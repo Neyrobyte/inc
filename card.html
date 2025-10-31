@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>test card</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Цветовая схема */
+        :root {
+            color-scheme: only light;
+        }
+        
+        /* Корневой стиль сайта */
+        * {
+            margin: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Цвет выделения текста */
+        ::selection {
+            background-color: rgba(0, 200, 40, 0.2);
+        }
+        
+        /* Стили body */
+        body {
+            font-family: 'Share Tech Mono', monospace, monospace;
+            background-color: #171717;
+            color: #cccccc;
+            line-height: 1.6;
+        }
+        
+        /* Основной контейнер */
+        .container {
+            padding: 50px 8px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Родительский элемент для 3D */
+        .parent {
+            height: 400px;
+            width: 300px;
+            padding: 20px;
+            perspective: 1000px;
+        }
+        
+        /* Основные стили карточки */
+        .card {
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: all 0.6s ease;
+            background-color: black;
+            border: solid #050505 0.1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        /* Создание псевдоэлемента для эффекта свечения карточки */
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #00ff41, #005f1f, #00ff41);
+            z-index: -1;
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            filter: blur(50px);
+        }
+        
+        /* Основной эффект наведения на карточку */
+        .card:hover {
+            transform: rotate3d(6.5, 1, 0, 30deg);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+        
+        /* Активация эффекта свечения */
+        .card:hover::before {
+            opacity: 0.7;
+        }
+        
+        /* Верхняя часть карточки (фон) */
+        .card-background {
+            height: 30%;
+            background-image: 
+                linear-gradient(to bottom, rgba(0, 200, 40, 0.8), rgba(0, 0, 0, 0.96)),
+                url(res/grunge.webp);
+            background-size: 150%;
+            background-blend-mode: multiply;
+            background-position: center center;
+            transform: translateZ(-20px);
+            transition: all 0.6s ease;
+            position: relative;
+            text-align: center;
+            padding-top: 15%;
+            color: #00ff41;
+        }
+        
+        /* Заголовок (текст фона карточки) */
+        .card-background h3 {
+            position: relative;
+            transform: translateZ(0) scale(1);
+            transition: all 0.6s ease;
+        }
+        
+        /* Эффект блика заголовка для заголовка */
+        .card-background h3::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 2px;
+            left: 4px;
+            right: 0px;
+            color: rgba(0, 255, 65, 0.2);
+            z-index: -1;
+            opacity: 0;
+            transform: translateZ(-11px) translateY(5px) translateX(-7px);
+            filter: blur(2px);
+            transition: all 0.6s ease;
+        }
+        
+        /* Анимации фона (верхней части) при наведении */
+        .card:hover .card-background {
+            background-position: 200% 0%;
+            transform: translateZ(-40px) rotate3d(10, 0, 0, 0deg);
+        }
+        
+        /* Анимации заголовка при наведении */
+        .card:hover .card-background h3 {
+            transform: translateZ(0px) translateY(-7px) translateX(5px) scale(1.09);
+        }
+        
+        /* Активация эффекта блика заголовка */
+        .card:hover .card-background h3::after {
+            opacity: 1;
+        }
+    
+        /* Основное содержимое карточки */
+        .card-content {
+            padding: 8%;
+            background-color: #050505;
+            border-top: double #103f20 2.7px;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            transform: translateZ(0);
+            transition: all 0.6s ease;
+        }
+        
+        /* ??? */
+        .card:hover .card-content {
+            transform: translateZ(20px);
+        }
+        
+        /* Основной текст карточки */
+        .card-content p {
+            transition: all 0.6s ease;
+            transform: translateZ(0) scale(1);
+            position: relative;
+            font-size: 1em;
+        }
+        
+        /* Эффект блика текста */
+        .card-content p::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 0px;
+            color: rgba(255, 255, 255, 0.2);
+            z-index: -1;
+            opacity: 0;
+            transform: translateZ(-11px) translateY(5px) translateX(-7px);
+            filter: blur(2px);
+            transition: opacity 0.6s ease;
+        }
+        
+        /* Эффект основного текста при наведении */
+        .card:hover .card-content p {
+            transform: translateZ(0px) translateY(-5px) translateX(5px) scale(1.06);
+        }
+        
+        .card:hover .card-content p::after {
+            opacity: 1;
+        }
+    
+        /* Номер карточки */
+        .number-box {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            height: 40px;
+            width: 40px;
+            background-image: 
+                linear-gradient(to bottom, rgba(0, 200, 40, 0.8), rgba(0, 0, 0, 1)),
+                url(res/cubes.jpg);
+            background-size: cover;
+            background-blend-mode: multiply;
+            background-position: left top;
+            border: double #305f30 0.1rem;
+            border-radius: 6px;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            transform: translateZ(10px);
+            transition: all 0.6s ease;
+        }
+        
+        /* ??? */
+        .card:hover .number-box {
+            transform: translateZ(30px);
+        }
+        
+        /* Текст номера карточки */
+        .number-box .number {
+            font-size: 16px;
+            font-weight: 900;
+            color: #346934;
+            transition: all 0.6s ease;
+        }
+        
+        /* Эффект контейнера номера карточки при наведении */
+        .card:hover .number-box .number {
+            color: #00ff41;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="parent">
+            <div class="card">
+                <div class="card-background">
+                    <div class="number-box">
+                        <div class="number">15</div>
+                    </div>
+                    <h3 data-text="Neyrobyte">Neyrobyte</h3>
+                </div>
+                <div class="card-content">
+                    <p data-text="Инновационные технологии для цифрового будущего">Инновационные технологии для цифрового будущего</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
